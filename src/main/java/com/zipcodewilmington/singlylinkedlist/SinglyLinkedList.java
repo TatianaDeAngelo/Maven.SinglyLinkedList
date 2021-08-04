@@ -40,4 +40,53 @@ public class SinglyLinkedList <T extends Comparable<T>>  {
  * sort -- sorts the list using your algorithm of choice. You must perform the sorting yourself (no fair using someone else's library)
  */
 
-}
+    public void add(T data) {//add an element to the list
+        Node newNode = new Node(data);
+
+        if(head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+
+        this.size++;
+    }
+
+    public void remove(int index) { //remove an element at specific index(int index)
+        Node current = head;
+        Node nextEl;
+
+        if (current != null && index == 0) {
+            head = current.next;
+        }
+
+        for (int i = 0; i < index - 1; i++) { //to not reach end
+             current = current.next;
+             nextEl = current.next;
+             current.next = nextEl;
+            
+        }
+
+        this.size--;
+    }
+
+    public boolean contains(T conElement){ //return true if element is in list
+        Node current = head;
+        int count = 0;
+
+        while (current != null) {
+            if (current.data.equals(conElement)) {
+                return true;
+            }
+
+            current = current.next;
+            count++;
+        }
+
+        return false;
+    }
+
+
+} //final brace
