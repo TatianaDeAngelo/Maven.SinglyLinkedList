@@ -22,8 +22,8 @@ public class SinglyLinkedList <T extends Comparable<T>>  {
         T data;
         Node next;
 
-        public Node(T data) {
-            data = data;
+        public Node(T nodeData) {
+            data = nodeData; //had to change name, tests failing
             next = null;
         }
     }
@@ -72,7 +72,7 @@ public class SinglyLinkedList <T extends Comparable<T>>  {
         this.size--;
     }
 
-    public boolean contains(T findElement){ //return true if element is in list
+    public boolean contains(T findElement) { //return true if element is in list
         Node current = head;
         int index = 0;
 
@@ -80,7 +80,6 @@ public class SinglyLinkedList <T extends Comparable<T>>  {
             if (current.data.equals(findElement)) {
                 return true;
             }
-
             current = current.next;
             index++;
         }
@@ -109,13 +108,24 @@ public class SinglyLinkedList <T extends Comparable<T>>  {
     }
 
     public T get(int index) { //return the element at the specified index, generic
-        Node current = head;
-        for (int i = 0; i <index; i++) {
-             if(i == index) {
-                 return current.data;
-             }
+        Node current = head; //had to update because tests were all return 1 and not the number at the index
+        T getData = null;
+        int count = 0;
+
+        if (current == null) {
+            return getData;
         }
-        return null;
+
+        while (current != null) {
+            if (index == count) {
+                getData = current.data;
+                return getData;
+            }
+
+            count++;
+            current = current.next;
+        }
+        return getData;
     }
 
 
@@ -150,21 +160,22 @@ public class SinglyLinkedList <T extends Comparable<T>>  {
     }
 
     public void sort() { // sort the list using your algorithm of choice.
-        T temp = null;
-        for (int i = 0; i < size; i++) {
-            Node current = head;
-            Node newCurrent = head.next;
+        Node current = head;
+        Node next = null;
+        T temp;
 
-            while (newCurrent != null) {
-                if (current.data.compareTo(newCurrent.data) > 0) {
+        while (current != null) {
+            next = current.next;
+
+            while (next != null) {
+                if (current.data.compareTo(next.data) > 0) {
                     temp = current.data; //running thru to make the new list
-                    current.data = newCurrent.data;
-                    newCurrent .data = temp;
+                    current.data = next.data;
+                    next.data = temp;
                 }
+                next = next.next;
             }
             current = current.next;
-            newCurrent = newCurrent.next;
-
         }
     }
 
