@@ -72,21 +72,102 @@ public class SinglyLinkedList <T extends Comparable<T>>  {
         this.size--;
     }
 
-    public boolean contains(T conElement){ //return true if element is in list
+    public boolean contains(T findElement){ //return true if element is in list
         Node current = head;
-        int count = 0;
+        int index = 0;
 
         while (current != null) {
-            if (current.data.equals(conElement)) {
+            if (current.data.equals(findElement)) {
                 return true;
             }
 
             current = current.next;
-            count++;
+            index++;
         }
 
         return false;
     }
 
+    public int find (T findElement) {//return the element's index if it is in the list, -1 otherwise, similar to contains approach
+        Node current = head;
+        int index = 0;
+
+        while (current != null) {
+            if (current.data.equals(findElement)) {
+                return index; //changed count to index because it specifies "index"
+            }
+            current = current.next;
+            index++;
+        }
+
+        return -1;
+    }
+
+    public int size() {//return the current size of the list
+
+        return this.size;
+    }
+
+    public T get(int index) { //return the element at the specified index, generic
+        Node current = head;
+        for (int i = 0; i <index; i++) {
+             if(i == index) {
+                 return current.data;
+             }
+        }
+        return null;
+    }
+
+
+    /**
+     * A deep copy means actually creating a new array and copying over the values.
+     * https://www.geeksforgeeks.org/deep-shallow-lazy-copy-java-examples/
+     * The deep copy of an object will have an exact copy of all the fields of source
+     * object like a shallow copy, but unlike sallow copy if the source object has any
+     * reference to object as fields, then a replica of the object is created by calling
+     * clone method. This means that both source and destination objects are independent
+     * of each other. Any change made in the cloned object will not impact the source object.
+     *
+     * "For that, LinkedList needs to support copying (or at least a way to iterate over its elements). "
+     *
+     * Clone() returns a shallow copy of this linkedList
+     *
+     *
+     */
+
+
+
+    public SinglyLinkedList<T> copy() { //returns a new linked list containing the same values (look up deep versus shallow copy)
+        SinglyLinkedList<T> deepCopy = new SinglyLinkedList<T>();
+        Node current = head;
+
+        while (current != null) {
+            deepCopy.add(current.data);
+            current = current.next;
+        }
+
+        return deepCopy; //still unsure if this is correct because most code was shallow or recursive
+    }
+
+    public void sort() { // sort the list using your algorithm of choice.
+        T temp = null;
+        for (int i = 0; i < size; i++) {
+            Node current = head;
+            Node newCurrent = head.next;
+
+            while (newCurrent != null) {
+                if (current.data.compareTo(newCurrent.data) > 0) {
+                    temp = current.data; //running thru to make the new list
+                    current.data = newCurrent.data;
+                    newCurrent .data = temp;
+                }
+            }
+            current = current.next;
+            newCurrent = newCurrent.next;
+
+        }
+    }
 
 } //final brace
+//might come back and attempt other optional parts, very hard, handheld lab
+//need more practice
